@@ -1,1 +1,199 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Full Bowl Pet Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&family=Sarabun:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fffdfa;--ink:#1f2a28;--mute:#5d6b68;--line:#e6ddd0;--or:#f26b1d;--or2:#c94f0a;--teal:#0f4c47;--sun:#ffd25e;--card:#fff;--soft:#fff1de;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14201e;--ink:#f3efe8;--mute:#a9b7b3;--line:#2f4440;--or:#ff8a45;--or2:#ff9b5e;--teal:#7fd0c4;--card:#1c2b29;--soft:#223633;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14201e;--ink:#f3efe8;--mute:#a9b7b3;--line:#2f4440;--or:#ff8a45;--or2:#ff9b5e;--teal:#7fd0c4;--card:#1c2b29;--soft:#223633;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Sarabun,"Noto Sans Thai",system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+h1,h2,h3,.logo{font-family:Mitr,"Noto Sans Thai",sans-serif;font-weight:500;line-height:1.25;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{max-width:1080px;margin:auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-size:28px;text-decoration:none;letter-spacing:.5px}.logo small{font-size:15px;color:var(--or);margin-left:3px}
+nav{margin-left:auto;display:flex;gap:6px;align-items:center}
+nav a{padding:6px 12px;border-radius:99px;text-decoration:none;font-weight:500}
+nav a[aria-current="page"]{background:var(--soft);color:var(--or2);text-decoration:underline;text-underline-offset:5px}
+nav a:hover{background:var(--soft)}
+.cartb{position:relative;font-size:22px;padding:4px 10px}
+.cartb b{position:absolute;top:-4px;right:-2px;background:var(--or);color:#fff;font:600 11px/18px Sarabun;min-width:18px;height:18px;border-radius:9px;text-align:center}
+.cartb b:empty,.cartb b[data-n="0"]{display:none}
+main{max-width:1080px;margin:auto;padding:24px 20px 56px}
+section.pg{display:none}section.pg.on{display:block}
+.hero{border-radius:28px;background:var(--teal);color:#fff;padding:48px 36px;display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:center;overflow:hidden}
+.hero h1{font-size:clamp(28px,5vw,46px)}.hero p{max-width:46ch;opacity:.9}
+.hero .art{font-size:clamp(90px,16vw,170px);text-align:center;line-height:1}
+.btn{display:inline-block;background:var(--or);color:#fff;border:0;border-radius:99px;padding:10px 22px;font:600 16px Sarabun;text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--or2)}
+.btn.alt{background:var(--sun);color:#3a2a00}
+.safe{text-align:center;max-width:62ch;margin:40px auto}
+.safe h2{font-size:24px;margin-bottom:8px}.safe p{color:var(--mute)}
+.band{border-radius:28px;background:var(--sun);color:#3a2a00;padding:30px 36px;display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.band h2{font-size:26px}
+h2.t{font-size:26px;text-align:center;margin:56px 0 20px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.ph{aspect-ratio:1/1;display:grid;place-items:center;font-size:64px;background:var(--t,var(--soft))}
+.info{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.info h3{font:500 15px/1.35 Mitr,sans-serif}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+.price{font-weight:700;color:var(--or2)}
+.add{background:var(--soft);border:1px solid var(--line);border-radius:50%;width:38px;height:38px;font-size:18px;cursor:pointer}
+.add:hover{background:var(--or);filter:brightness(1.05)}
+.types{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-radius:24px;overflow:hidden}
+.types a{display:grid;place-items:center;text-align:center;padding:40px 10px;min-height:240px;text-decoration:none;color:#fff;font:500 22px Mitr}
+.types span{display:block;font-size:84px;line-height:1.1}
+.sub{color:var(--mute);margin:0 0 12px}
+.rowscroll{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:10px}
+.rowscroll .card{flex:0 0 190px;scroll-snap-align:start}
+.cat{margin-top:40px}.cat h2{font-size:22px;margin-bottom:12px}
+.pbanner{border-radius:28px;background:linear-gradient(120deg,var(--or),#ff9f4a);color:#fff;padding:44px 32px;text-align:center}
+.pbanner h1{font-size:clamp(28px,5vw,44px)}
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center;margin-top:32px}
+.shots{display:flex;gap:12px}.shots .ph{flex:1;border-radius:16px;aspect-ratio:3/4;font-size:48px}
+.dots{display:flex;gap:8px;justify-content:center;margin-top:14px}
+.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}.dots i:first-child{width:26px;background:var(--or)}
+.shop{border-radius:28px;display:grid;place-items:center;aspect-ratio:21/8;font-size:90px;background:var(--soft)}
+.cert .ph{aspect-ratio:3/4;font-size:48px}.cert .card{flex:0 0 150px}
+.box{max-width:560px;margin:28px auto;text-align:center}
+.cinfo{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:start}
+.list{list-style:none;padding:0;margin:0;display:grid;gap:16px}
+.list li{display:flex;gap:14px;align-items:center}
+.list .ic{width:46px;height:46px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center;font-size:20px;flex:none}
+.list b{display:block}
+form{background:var(--card);border:1.5px solid var(--ink);border-radius:20px;padding:22px;max-width:620px;margin:40px auto}
+label{display:block;font-weight:500;margin:12px 0 4px}
+input,textarea{width:100%;border:1.5px solid var(--ink);border-radius:99px;padding:10px 16px;font:16px Sarabun;background:var(--bg);color:var(--ink)}
+textarea{border-radius:20px;min-height:110px;resize:vertical}
+.ok{color:var(--teal);font-weight:700;margin-top:12px}
+.soc{display:grid;grid-template-columns:1fr 1.4fr;gap:32px;margin-top:20px}
+.soc a{display:flex;gap:12px;align-items:center;margin:10px 0;text-decoration:none}
+.map{border:1.5px solid var(--ink);border-radius:24px;min-height:200px;display:grid;place-items:center;color:var(--mute);background:var(--soft)}
+.empty{border:1.5px solid var(--ink);border-radius:24px;padding:56px 20px;text-align:center}
+.empty .big{font-size:72px}
+.cl{display:grid;gap:10px;text-align:left;margin:20px auto;max-width:640px}
+.ci{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px}
+.ci .e{font-size:30px}.ci .n{flex:1}.ci button{border:1px solid var(--line);background:var(--soft);color:var(--ink);border-radius:8px;width:30px;height:30px;cursor:pointer}
+.perks{display:grid;grid-template-columns:repeat(2,1fr);border:1.5px solid var(--ink);max-width:620px;margin:40px auto}
+.perks div{padding:20px;text-align:center;border:.75px solid var(--ink)}
+.perks .e{font-size:44px}.perks b{display:block}.perks small{color:var(--mute)}
+footer{border-top:1px solid var(--line);text-align:center;padding:24px 20px;color:var(--mute)}
+@media (max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.hero,.two,.cinfo,.soc{grid-template-columns:1fr}.hero{padding:32px 24px}.types{grid-template-columns:1fr}.types a{min-height:150px}nav{margin-left:0;width:100%;overflow-x:auto}.logo{font-size:24px}.perks{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+<a class="logo" href="#home">Full bowl<small>pet store</small></a>
+<nav aria-label="เมนูหลัก">
+<a href="#home" data-p="home">Home</a><a href="#about" data-p="about">About</a><a href="#products" data-p="products">Products</a><a href="#contact" data-p="contact">Contact</a>
+<a class="cartb" href="#cart" data-p="cart" aria-label="ตะกร้าสินค้า">🛒<b id="cn" data-n="0"></b></a>
+</nav></div></header>
 
+<main>
+<section class="pg" id="home">
+ <div class="hero"><div><h1>อิ่มท้อง อุ่นใจ ทุกมื้อของเจ้าตัวเล็ก</h1><p>อาหารและอุปกรณ์สัตว์เลี้ยงคัดสรรคุณภาพ จัดส่งถึงบ้านหรือสั่งออนไลน์แล้วไปรับที่ร้าน</p><p><a class="btn alt" href="#products">เริ่มเลือกสินค้า</a></p></div><div class="art" aria-hidden="true">🐶🥣</div></div>
+ <div class="safe"><h2>ปลอดภัยทุกคำที่เจ้าตัวเล็กกิน</h2><p>สินค้าทุกชิ้นผ่านการตรวจสอบแหล่งที่มาและมาตรฐานความปลอดภัยก่อนวางจำหน่าย ไม่ใช้สารที่ไม่จำเป็น และตรวจสอบวันหมดอายุทุกล็อต</p><p><a href="#about">ดูมาตรฐานของเรา</a></p></div>
+ <div class="band"><div><h2>ส่งฟรีเมื่อซื้อครบ 1,000 บาท</h2><div>จัดส่งทุก 24 ชั่วโมง และคืนสินค้าได้ภายใน 7 วัน</div></div><a class="btn" href="#products">ช้อปเลย</a></div>
+ <h2 class="t">Popular Products</h2><div class="grid" data-ids="1,6,11,16"></div>
+ <h2 class="t">Special Products</h2><div class="grid" data-ids="3,8,13,18"></div>
+ <h2 class="t">Pet Type</h2>
+ <div class="types"><a href="#products" style="background:#0f4c47"><div><span>🐶</span>สุนัข</div></a><a href="#products" style="background:#c94f0a"><div><span>🐱</span>แมว</div></a><a href="#products" style="background:#7a5a00"><div><span>🐰</span>กระต่ายและหนู</div></a></div>
+ <h2 class="t">Recommended for animals</h2><div class="grid" data-ids="2,7,12,17"></div>
+</section>
+
+<section class="pg" id="about">
+ <div class="shop" aria-label="ภาพร้าน">🏪🐾</div>
+ <div class="two"><div><h1>เกี่ยวกับ Full bowl</h1><p>Full bowl เริ่มจากร้านเล็กๆ ที่อยากให้สัตว์เลี้ยงทุกตัวได้กินของดีในราคาที่เข้าถึงได้ วันนี้เรามี 200 สาขาทั่วประเทศ พร้อมทีมงานที่รักสัตว์และพร้อมแนะนำอาหารให้เหมาะกับน้องแต่ละตัว</p></div>
+ <div><div class="shots"><div class="ph" style="--t:#ffe3c4">🐕</div><div class="ph" style="--t:#cfe8e4">🐈</div><div class="ph" style="--t:#fff0b8">🐇</div></div><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div></div></div>
+ <h2 class="t">มาตรฐาน ความปลอดภัย</h2>
+ <div class="box"><div class="ph" style="--t:#cfe8e4;border-radius:20px;font-size:100px">🛡️</div><p>เราคัดเลือกผู้ผลิตที่ผ่านการรับรองมาตรฐานสากล ตรวจสอบส่วนผสมและวันหมดอายุทุกล็อต และเก็บสินค้าในอุณหภูมิที่เหมาะสมตลอดห่วงโซ่การขนส่ง เพื่อให้มั่นใจว่าทุกมื้อปลอดภัย</p></div>
+ <h2 style="font-size:26px;margin-top:40px">เกียรติบัตร</h2>
+ <div class="rowscroll cert" style="margin-top:12px"></div><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+</section>
+
+<section class="pg" id="products">
+ <div class="pbanner"><h1>สินค้ายอดนิยม</h1><p>เลือกอาหารและอุปกรณ์ที่เหมาะกับสัตว์เลี้ยงของคุณ</p></div>
+ <div id="cats"></div>
+</section>
+
+<section class="pg" id="contact">
+ <div class="cinfo"><div class="shop" style="aspect-ratio:16/10" aria-label="ภาพร้าน">🏬</div>
+ <div><h2 style="margin-bottom:16px">ข้อมูลติดต่อ</h2><ul class="list">
+ <li><span class="ic">📞</span><div><b>เบอร์โทรศัพท์</b>013-982-XXXX</div></li>
+ <li><span class="ic">✉️</span><div><b>อีเมล</b>hello@fullbowl.com</div></li>
+ <li><span class="ic">🌐</span><div><b>แอดไลน์</b>@fullbowl.com</div></li>
+ <li><span class="ic">📍</span><div><b>ที่อยู่ร้าน</b>เพิ่มที่อยู่ร้านของคุณที่นี่</div></li>
+ <li><span class="ic">🕒</span><div>จันทร์-ศุกร์ 10.00–21.00 น.<br>เสาร์-อาทิตย์ 10.00–23.00 น.</div></li></ul></div></div>
+ <form id="f"><h2>ส่งข้อความถึงเรา</h2>
+ <label for="n">ชื่อ-นามสกุล</label><input id="n" required placeholder="กรอกชื่อ - นามสกุล">
+ <label for="t">เบอร์โทรศัพท์</label><input id="t" type="tel" required placeholder="กรอกเบอร์โทรศัพท์">
+ <label for="m">ข้อความสอบถาม</label><textarea id="m" required placeholder="พิมพ์ข้อความของคุณที่นี่..."></textarea>
+ <p><button class="btn" type="submit">ส่งข้อความ</button></p><div class="ok" id="ok" role="status"></div></form>
+ <div class="soc"><div><h2>ติดตามเราได้ที่</h2><a href="#contact">📸 instagram.com/fullbowl</a><a href="#contact">📘 facebook.com/fullbowl</a><a href="#contact">🎵 tiktok.com/@fullbowl</a></div>
+ <div><h2 style="margin-bottom:12px">แผนที่ร้าน full bowl</h2><div class="map">ใส่แผนที่ร้านที่นี่</div></div></div>
+</section>
+
+<section class="pg" id="cart">
+ <div id="cartbody"></div>
+ <div class="perks">
+ <div><div class="e">🚚</div><b>จัดส่งฟรี</b><small>เมื่อมียอดซื้อขั้นต่ำ 1,000 บาท</small></div>
+ <div><div class="e">⏱️</div><b>จัดส่งทุก 24 ชั่วโมง</b><small>สามารถคืนสินค้าได้ภายใน 7 วัน</small></div>
+ <div><div class="e">📱</div><b>สั่งซื้อสินค้าออนไลน์แล้วไปรับที่ร้าน</b><small>มี 200 สาขาทั่วประเทศ</small></div>
+ <div><div class="e">↩️</div><b>คืนสินค้า/ขอเงินคืนได้ง่าย</b><small>สามารถคืนสินค้าได้ภายใน 7 วัน</small></div></div>
+</section>
+</main>
+<footer>© Full bowl pet store · 013-982-XXXX · hello@fullbowl.com</footer>
+
+<script>
+var T=['#ffe3c4','#cfe8e4','#fff0b8','#f9d6d0','#dce6ff'];
+var CATS=[['dog','อาหารสุนัขสำหรับสุนัข'],['cat','อาหารสุนัขสำหรับแมว'],['small','อาหารสำหรับกระต่ายและหนู'],['acc','อุปกรณ์เสริมสำหรับสัตว์เลี้ยง']];
+var D={dog:[['🍗','อาหารสุนัขโต ไก่อบและข้าวกล้อง 3 กก.',459],['🥩','อาหารสุนัขเล็ก เนื้อวัว 1.5 กก.',289],['🐶','อาหารลูกสุนัข นมและไก่ 2 กก.',349],['🦴','ขนมขัดฟันสุนัข แพ็ก 7 ชิ้น',129],['🥣','อาหารเปียกสุนัข ซอง 12 ซอง',249]],
+cat:[['🐟','อาหารแมวโต ปลาทูน่า 1.2 กก.',329],['🐱','อาหารลูกแมว ปลาแซลมอน 1 กก.',359],['🍣','อาหารเปียกแมว ซอง 12 ซอง',229],['🥫','อาหารกระป๋องแมว ปลาทู 85 ก.',35],['🍬','ขนมแมวเลีย แพ็ก 4 ซอง',89]],
+small:[['🥕','อาหารกระต่าย ผักอบแห้ง 1 กก.',189],['🌾','หญ้าทิโมธี 500 ก.',159],['🐹','อาหารหนูแฮมสเตอร์ ธัญพืชรวม',99],['🥜','ขนมกระต่ายและหนู ผลไม้อบ',79],['🐰','อาหารเม็ดกระต่ายโต 2 กก.',249]],
+acc:[['🥣','ชามอาหารเซรามิก',159],['🧶','ของเล่นบอลเชือก',69],['🦮','สายจูงพร้อมปลอกคอ',199],['🛏️','เบาะนอนนุ่ม ไซซ์ M',590],['🧴','แชมพูอ่อนโยน 250 มล.',149]]};
+var items=[],id=0;
+CATS.forEach(function(c){D[c[0]].forEach(function(d,i){id++;items.push({id:id,c:c[0],e:d[0],n:d[1],p:d[2],t:T[i%5]})})});
+var cart={};
+try{cart=JSON.parse(localStorage.getItem('fb_cart')||'{}')||{}}catch(e){cart={}}
+function save(){try{localStorage.setItem('fb_cart',JSON.stringify(cart))}catch(e){}}
+function fmt(n){return n.toLocaleString('th-TH')}
+function card(it,btn){return '<article class="card"><div class="ph" style="--t:'+it.t+'" aria-hidden="true">'+it.e+'</div><div class="info"><h3>'+it.n+'</h3><div class="row"><span class="price">฿'+fmt(it.p)+'</span>'+(btn?'<button class="add" data-id="'+it.id+'" aria-label="เพิ่ม '+it.n+' ลงตะกร้า">🛒</button>':'')+'</div></div></article>'}
+document.querySelectorAll('[data-ids]').forEach(function(g){g.innerHTML=g.dataset.ids.split(',').map(function(i){return card(items[i-1],true)}).join('')});
+document.getElementById('cats').innerHTML=CATS.map(function(c){return '<div class="cat"><h2>'+c[1]+'</h2><div class="rowscroll">'+items.filter(function(x){return x.c===c[0]}).map(function(x){return card(x,true)}).join('')+'</div></div>'}).join('');
+document.querySelector('.cert').innerHTML=['🏅','📜','🎖️','✅','🥇','🌿'].map(function(e,i){return '<div class="card"><div class="ph" style="--t:'+T[i%5]+'" aria-hidden="true">'+e+'</div><div class="info"><h3>เกียรติบัตร '+(i+1)+'</h3></div></div>'}).join('');
+function renderCart(){
+ var ids=Object.keys(cart),n=0,sum=0;
+ ids.forEach(function(k){n+=cart[k];sum+=cart[k]*items[k-1].p});
+ var b=document.getElementById('cn');b.textContent=n||'';b.dataset.n=n;
+ var el=document.getElementById('cartbody');
+ if(!ids.length){el.innerHTML='<div class="empty"><div class="big">🧺</div><h2>ตะกร้าสินค้าของคุณว่างเปล่า</h2><p>เริ่มช้อปปิ้ง เลือกสินค้าให้เจ้าตัวเล็กได้เลย</p><a class="btn" href="#products">เริ่มเลือกสินค้า</a></div>';return}
+ el.innerHTML='<div class="empty"><h2>ตะกร้าสินค้าของคุณ</h2><div class="cl">'+ids.map(function(k){var it=items[k-1];return '<div class="ci"><span class="e">'+it.e+'</span><span class="n">'+it.n+'<br><b class="price">฿'+fmt(it.p*cart[k])+'</b></span><button data-m="'+k+'" aria-label="ลดจำนวน">−</button><b>'+cart[k]+'</b><button data-pl="'+k+'" aria-label="เพิ่มจำนวน">+</button></div>'}).join('')+'</div><p><b>รวม ฿'+fmt(sum)+'</b><br>'+(sum>=1000?'คุณได้รับสิทธิ์จัดส่งฟรี':'ซื้อเพิ่มอีก ฿'+fmt(1000-sum)+' เพื่อรับสิทธิ์จัดส่งฟรี')+'</p><a class="btn" href="#products">เลือกสินค้าต่อ</a></div>';
+}
+document.addEventListener('click',function(e){
+ var a=e.target.closest('[data-id]'),m=e.target.closest('[data-m]'),p=e.target.closest('[data-pl]');
+ if(a){cart[a.dataset.id]=(cart[a.dataset.id]||0)+1;a.textContent='✓';setTimeout(function(){a.textContent='🛒'},800)}
+ else if(m){var k=m.dataset.m;cart[k]--;if(cart[k]<=0)delete cart[k]}
+ else if(p){cart[p.dataset.pl]++}
+ else return;
+ save();renderCart();
+});
+document.getElementById('f').addEventListener('submit',function(e){e.preventDefault();document.getElementById('ok').textContent='ส่งข้อความเรียบร้อยแล้ว ทีมงานจะติดต่อกลับโดยเร็ว';e.target.reset()});
+function route(){
+ var h=(location.hash||'#home').slice(1);if(!document.getElementById(h)||h==='cartbody')h='home';
+ document.querySelectorAll('section.pg').forEach(function(s){s.classList.toggle('on',s.id===h)});
+ document.querySelectorAll('nav a').forEach(function(a){a.toggleAttribute('aria-current',a.dataset.p===h);if(a.dataset.p===h)a.setAttribute('aria-current','page')});
+ window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);route();renderCart();
+</script>
+</body>
+</html>
